@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, send_file
+from flask import Flask, render_template, request, send_file, jsonify
 import json
 from datetime import datetime
 
@@ -12,6 +12,14 @@ def index():
 def generate_raml():
     sample_data = request.form['sample_data']
     http_method = request.form['http_method']
+
+    try:
+        # Validate JSON structure
+        parsed_data = json.loads(sample_data)
+    except json.JSONDecodeError:
+        # If the JSON is invalid, return an error message
+        error_msg = "Invalid JSON structure. Please provide a valid JSON object."
+        return render_template('result.html', error_msg=error_msg)
 
     # Your logic to generate RAML specifications goes here
     # For demonstration purposes, let's just convert the data to upper case

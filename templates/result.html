@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+
     <style>
         body {
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -102,6 +103,7 @@
             border: 1px solid #ccc;
             border-radius: 5px;
             text-align: left;
+            font-family: Consolas, monospace; /* Update to use Consolas font */
         }
 
         .copy-btn {
@@ -131,7 +133,11 @@
         <h1 class="text-center">Result</h1>
         <div class="row">
             <div class="col-md-8 offset-md-2">
-                {% if filename %}
+                {% if error_msg %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ error_msg }}
+                    </div>
+                {% elif filename %}
                     <div class="alert alert-success" role="alert">
                         Converted data has been saved to: <a href="{{ filename }}" download>{{ filename }}</a>
                     </div>
