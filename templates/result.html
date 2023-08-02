@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Result</title>
+    <!-- MDB CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.css" rel="stylesheet">
+    <!-- Optional: Icons (choose one of the following) -->
+    <!-- Google Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background-color: #444654;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            color: #B5B5BB;
+        }
+
+        header {
+            background-color: #202123;
+            color: #B5B5BB;
+            padding: 10px;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            background-color: #343740;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            flex: 1;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: bold;
+            color: #B5B5BB;
+            margin-bottom: 20px;
+        }
+
+        .alert {
+            border-radius: 10px;
+            padding: 15px;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .alert-success {
+            background-color: #202123; /* Updated color to match the webpage color scheme */
+            border-color: #202123; /* Updated color to match the webpage color scheme */
+            color: #B5B5BB; /* Updated color to match the webpage color scheme */
+        }
+
+        .alert-danger {
+            background-color: #f8c6c6;
+            border-color: #f67a7a;
+            color: #ea4335;
+        }
+
+        footer {
+            background-color: #202123;
+            color: #B5B5BB;
+            padding: 10px;
+            text-align: center;
+            font-size: 14px;
+            margin-top: auto;
+        }
+
+        /* Styles for the copied text box */
+        .fixed-text-box {
+            background-color: #343740; /* Updated color to match the container in index.html */
+            position: relative;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            max-width: 100%;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            margin-top: 20px;
+        }
+
+        .fixed-text-box-content {
+            flex: 1;
+        }
+
+        #converted_text {
+            resize: none;
+            width: 100%;
+            height: 400px; /* Adjust the height as needed */
+            font-family: monospace;
+            color: #333;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            text-align: left;
+        }
+
+        .copy-btn {
+            background-color: #19C37D;
+            border-color: #19C37D;
+            border-radius: 5px;
+            color: #fff;
+            padding: 5px 10px;
+            cursor: pointer;
+            margin-top: 10px;
+            align-self: flex-end;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .copy-btn:hover {
+            background-color: #128b5d;
+            border-color: #128b5d;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <span style="color: #B5B5BB;">RAML-GPT</span>
+    </header>
+    <div class="container">
+        <h1 class="text-center">Result</h1>
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                {% if filename %}
+                    <div class="alert alert-success" role="alert">
+                        Converted data has been saved to: <a href="{{ filename }}" download>{{ filename }}</a>
+                    </div>
+                {% else %}
+                    <div class="alert alert-danger" role="alert">
+                        No data to convert.
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% if converted_data %}
+        <!-- Fixed text box to display the converted data -->
+        <div class="fixed-text-box">
+            <div class="fixed-text-box-content">
+                <textarea id="converted_text" readonly>{{ converted_data }}</textarea>
+            </div>
+            <button class="copy-btn" onclick="copyToClipboard()">Copy to Clipboard</button>
+        </div>
+    {% endif %}
+    <footer>&copy; 2023 RAML-GPT | All rights reserved.</footer>
+    <!-- MDB JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.js"></script>
+    <script>
+        function copyToClipboard() {
+            const textArea = document.getElementById('converted_text');
+            textArea.select();
+            document.execCommand('copy');
+        }
+    </script>
+</body>
+</html>
